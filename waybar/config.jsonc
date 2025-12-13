@@ -1,0 +1,289 @@
+{
+  //////////////////////////////////////////////////////////////////////////////
+  // GENERAL WAYBAR SETTINGS
+  //////////////////////////////////////////////////////////////////////////////
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "exclusive": true,
+  "height": 35,
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // MODULE LAYOUT (LEFT / CENTER / RIGHT)
+  //////////////////////////////////////////////////////////////////////////////
+  "modules-left": [
+    "hyprland/workspaces",
+  ],
+
+  "modules-center": [
+    "clock",
+    "custom/update",
+    "custom/screenrecording-indicator",
+    "custom/fanboost"
+  ],
+
+  "modules-right": [
+    "custom/steam-bpm",
+    "custom/firefox-bpm",
+    "custom/terminal",
+    "group/tray-expander",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "cpu",
+    "battery"
+  ],
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // WORKSPACES MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "hyprland/workspaces": {
+    "on-click": "activate",
+    "format": "[ {icon} ]",
+    "format-icons": {
+      "default": "",
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5",
+      "6": "6",
+      "7": "7",
+      "8": "8",
+      "9": "9",
+      "active": "󱓻"
+    },
+    "persistent-workspaces": {
+      "1": [],
+      "2": [],
+      "3": [],
+      "4": [],
+      "5": []
+    }
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Steam
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/steam-bpm": {
+    "format": "[ 󰓓 ]",
+    "tooltip-format": "Steam",
+    "on-click": "steam",
+    "interval": 0
+  },
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Firefox
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/firefox-bpm": {
+      "format": "[  ]",
+      "tooltip-format": "Firefox",
+      "on-click": "firefox",
+      "interval": 0 
+  },
+
+  //////////////////////////////////////////////////////////////////////////////
+  // Terminal
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/terminal": {
+      "format": "[   ]",
+      "tooltip-format": "Terminal",
+      "on-click": "kitty",
+      "interval": 0
+  },
+
+  //////////////////////////////////////////////////////////////////////////////
+  // BRACKETS (VISUAL SEPARATORS)
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/bracket-r": {
+    "format": "[",
+    "tooltip": false
+  },
+  "custom/bracket-l": {
+    "format": "]",
+    "tooltip": false
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // OMARCHY MENU
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/omarchy": {
+    "format": "<span font='omarchy'>\ue900</span>",
+    "on-click": "omarchy-menu",
+    "on-click-right": "xdg-terminal-exec",
+    "tooltip-format": "Omarchy Menu\n\nSuper + Alt + Space"
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // UPDATE INDICATOR
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/update": {
+    "format": "[  ]",
+    "exec": "omarchy-update-available",
+    "on-click": "omarchy-launch-floating-terminal-with-presentation omarchy-update",
+    "tooltip-format": "Omarchy update available",
+    "signal": 7,
+    "interval": 21600
+  },
+
+  //////////////////////////////////////////////////////////////////////////////
+  // FANCONTROL MODULE
+  //////////////////////////////////////////////////////////////////////////////
+
+"custom/fanboost": {
+    "exec": "/home/amitooj/fanboost-script/fan_status.sh",
+    "interval": 1,
+    "on-click": "/home/amitooj/fanboost.sh",
+    "return-type": "json",
+    "tooltip": true
+},
+
+  //////////////////////////////////////////////////////////////////////////////
+  // PLAYERCTL (MEDIA PLAYER)
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/playerctl": {
+    "format": "[ <span>{}</span> ]",
+    "return-type": "json",
+    "max-length": 100000,
+    "exec": "playerctl -a metadata --format '{\"text\": \"{{artist}}  {{markup_escape(title)}}\", \"tooltip\": \"{{playerName}} : {{markup_escape(title)}}\", \"alt\": \"{{status}}\", \"class\": \"{{status}}\"}' -F",
+    "on-click": "playerctl play-pause"
+    
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // CPU MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "cpu": {
+    "interval": 5,
+    "format": "[󰍛]",
+    "on-click": "kitty btop"
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // CLOCK MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "clock": {
+    "format": "[{:L%A %H:%M}]",
+    "format-alt": "{:L%d %B W%V %Y}",
+    "tooltip": false,
+    "on-click-right": "omarchy-launch-floating-terminal-with-presentation omarchy-tz-select"
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // NETWORK MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢","󰤥","󰤨"],
+    "format": "[{icon} ] ",
+    "format-wifi": "[{icon} ]",
+    "format-ethernet": "[󰀂 ]",
+    "format-disconnected": "[󰤮 ]",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "omarchy-launch-wifi"
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // BATTERY MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "battery": {
+    "format": "[{capacity}% {icon}]",
+    "format-discharging": "[{icon}]",
+    "format-charging": "[{icon}]",
+    "format-plugged": "[]",
+    "format-icons": {
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"],
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"]
+    },
+    "format-full": "[ 󰂅 ]",
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "on-click": "omarchy-menu power",
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // BLUETOOTH MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "bluetooth": {
+    "format": "[]",
+    "format-disabled": "[󰂲]",
+    "format-connected": "[]",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "blueberry"
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // AUDIO MODULE (PULSEAUDIO)
+  //////////////////////////////////////////////////////////////////////////////
+  "pulseaudio": {
+    "format": "[{icon} ]",
+    "on-click": "xdg-terminal-exec --app-id=com.omarchy.Wiremix -e wiremix",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Playing at {volume}%",
+    "scroll-step": 5,
+    "format-muted": "[ ]",
+    "format-icons": {
+      "default": ["", "", ""]
+    }
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // TRAY + EXPANDER GROUP
+  //////////////////////////////////////////////////////////////////////////////
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": ["custom/expand-icon", "tray"]
+  },
+
+  "custom/expand-icon": {
+    "format": " ",
+    "tooltip": false
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // SCREEN RECORDING INDICATOR
+  //////////////////////////////////////////////////////////////////////////////
+  "custom/screenrecording-indicator": {
+    "on-click": "omarchy-cmd-screenrecord",
+    "exec": "$OMARCHY_PATH/default/waybar/indicators/screen-recording.sh",
+    "signal": 8,
+    "return-type": "json"
+  },
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  // TRAY MODULE
+  //////////////////////////////////////////////////////////////////////////////
+  "tray": {
+    "icon-size": 12,
+    "spacing": 12
+  }
+}
+
+
